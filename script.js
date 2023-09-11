@@ -13,22 +13,53 @@ function getComputerChoice() {
     }
 }
 
-function round(playerSelection, computerSelection) {
-    playerSelection = `${playerSelection.slice(0, 1).toUpperCase()}${playerSelection.slice(1).toLowerCase()}`;
+function getPlayerChoice() {
+    let playerChoice = prompt("Rock, Paper or Scissors?");
+    playerChoice = `${playerChoice.slice(0, 1).toUpperCase()}${playerChoice.slice(1).toLowerCase()}`;
+    return playerChoice;
+}
 
+function round(playerSelection, computerSelection) {
     if (playerSelection === "Rock" && computerSelection === "Paper" ||
         playerSelection === "Paper" && computerSelection === "Scissors" ||
         playerSelection === "Scissors" && computerSelection === "Rock") {
-        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+        alert(`You Lose! ${computerSelection} beats ${playerSelection}`);
+        return 0;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors" ||
         playerSelection === "Paper" && computerSelection === "Rock" ||
         playerSelection === "Scissors" && computerSelection === "Paper") {
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
+        alert(`You Win! ${playerSelection} beats ${computerSelection}`);
+        return 1;
     } else {
-        return "Tie!";
+        alert("Tie");
     }
 }
 
-// const playerSelection = "rock";
-// const computerSelection = getComputerChoice();
-// console.log(round(playerSelection, computerSelection));
+function game() {
+    let roundCounter = 1;
+    let roundOutcome;
+    let playerScore = 0;
+    let computerScore = 0;
+
+    while (roundCounter <= 5) {
+        alert(`Round ${roundCounter}!`);
+        roundOutcome = round(getPlayerChoice(), getComputerChoice());
+        if (roundOutcome === 0) {
+            computerScore++;
+        } else if (roundOutcome === 1) {
+            playerScore++;
+        }
+        alert(`Player: ${playerScore}\nComputer: ${computerScore}`)
+        roundCounter++;
+    }
+
+    if (playerScore > computerScore) {
+        alert("Congratulations! You won the game!");
+    } else if (computerScore > playerScore) {
+        alert("Boo! You lost to a computer!");
+    } else {
+        alert("The game is a tie!");
+    }
+}
+
+game();
