@@ -13,53 +13,31 @@ function getComputerChoice() {
     }
 }
 
-function getPlayerChoice() {
-    let playerChoice = prompt("Rock, Paper or Scissors?");
-    playerChoice = `${playerChoice.slice(0, 1).toUpperCase()}${playerChoice.slice(1).toLowerCase()}`;
-    return playerChoice;
-}
-
-function round(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
+    const results = document.querySelector("#results");
     if (playerSelection === "Rock" && computerSelection === "Paper" ||
         playerSelection === "Paper" && computerSelection === "Scissors" ||
         playerSelection === "Scissors" && computerSelection === "Rock") {
-        alert(`You Lose! ${computerSelection} beats ${playerSelection}`);
-        return 0;
+        results.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors" ||
         playerSelection === "Paper" && computerSelection === "Rock" ||
         playerSelection === "Scissors" && computerSelection === "Paper") {
-        alert(`You Win! ${playerSelection} beats ${computerSelection}`);
-        return 1;
+        results.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
     } else {
-        alert("Tie");
+        results.textContent = "Tie";
     }
 }
 
-function game() {
-    let roundCounter = 1;
-    let roundOutcome;
-    let playerScore = 0;
-    let computerScore = 0;
+const buttons = document.querySelectorAll("button");
 
-    while (roundCounter <= 5) {
-        alert(`Round ${roundCounter}!`);
-        roundOutcome = round(getPlayerChoice(), getComputerChoice());
-        if (roundOutcome === 0) {
-            computerScore++;
-        } else if (roundOutcome === 1) {
-            playerScore++;
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        if (button.id === "rock") {
+            playRound("Rock", getComputerChoice());
+        } else if (button.id === "paper") {
+            playRound("Paper", getComputerChoice());
+        } else if (button.id === "scissors") {
+            playRound("Scissors", getComputerChoice());
         }
-        alert(`Player: ${playerScore}\nComputer: ${computerScore}`)
-        roundCounter++;
-    }
-
-    if (playerScore > computerScore) {
-        alert("Congratulations! You won the game!");
-    } else if (computerScore > playerScore) {
-        alert("Boo! You lost to a computer!");
-    } else {
-        alert("The game is a tie!");
-    }
-}
-
-game();
+    });
+});
